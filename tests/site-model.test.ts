@@ -31,3 +31,52 @@ test("empty development notice prevents publication", () => {
   v.en.ui.notice = "";
   assert.throws(() => validateCopy(v), /notice/);
 });
+
+for (const [label, remove] of [
+  [
+    "primary CTA",
+    (v: typeof copy) => {
+      delete (v.en.ui as Partial<typeof v.en.ui>).primary;
+    },
+  ],
+  [
+    "flow caption",
+    (v: typeof copy) => {
+      delete (v.en.ui as Partial<typeof v.en.ui>).flowTitle;
+    },
+  ],
+  [
+    "capability title",
+    (v: typeof copy) => {
+      delete (
+        v["zh-hant"].capabilities.agent as Partial<
+          typeof v.en.capabilities.agent
+        >
+      ).title;
+    },
+  ],
+  [
+    "navigation label",
+    (v: typeof copy) => {
+      delete (v["zh-hans"].nav as Partial<typeof v.en.nav>).developers;
+    },
+  ],
+  [
+    "status label",
+    (v: typeof copy) => {
+      delete (v.en.ui.status as Partial<typeof v.en.ui.status>).planned;
+    },
+  ],
+  [
+    "flow steps",
+    (v: typeof copy) => {
+      v.en.ui.flow = [];
+    },
+  ],
+] as const) {
+  test(`missing ${label} prevents publication`, () => {
+    const value = structuredClone(copy);
+    remove(value);
+    assert.throws(() => validateCopy(value), /Missing content/);
+  });
+}

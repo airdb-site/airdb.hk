@@ -39,3 +39,11 @@ Migration map reviewed against three language datasets: original trade/e-CNY, Ag
 Browser artifacts and temporary scripts are local only in `/tmp/airdb-company-qa`, not uploaded or committed. Primary screenshots: final-en/zh-hans/zh-hant-{375,1440}.png, platform-1440.png, trust-1440.png, research-ai-cross-border-payments-1440.png, 404.png. Automated matrix results: results.json. Original source worktree remains untouched.
 
 Official x402 source was accessible and checked. Existing AirDB Group destination is preserved, but the web tool could not access it during this run; availability is not claimed. Mailto target was checked without sending email. Online GitHub Pages routing, clean dependency download, Safari/Firefox, assistive-technology screen readers and real target-customer feedback are not verified here. No deployment has occurred.
+
+## Independent review and fix
+
+Fresh whole-branch review at 18b408a: no Critical findings, one Important completeness-guard gap, no additional Minor findings. Reviewer independently repeated Node/output checks and 96 Chrome route/viewport combinations, plus 801/900/1100/1101 breakpoints, no-JS language navigation, menu traversal and unknown-path HTTP404.
+
+The gap allowed deletion of a required CTA, flow caption or capability title to pass validation. Six new tests reproduced missing CTA, flow caption, capability title, navigation label, status label and empty flow. The validator now explicitly requires UI, navigation, statuses, capability fields and structured section text while allowing the article's intentional empty sections array. All six tests failed before the fix; full suite now 12/12 passes. Build/output checks remain green; no content or layout changed in this fix.
+
+Unknown local path also verified independently by implementer: HTTP404, custom Page not found title and three language home links. Final branch is retained locally; original source remains on 874c57c and clean. Review limits remain production hosting/clean install, native zoom/non-Chromium/screen readers, and commercial or financial-service validation.

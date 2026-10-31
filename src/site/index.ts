@@ -8,31 +8,86 @@ export const copy: Record<Locale, LocaleCopy> = {
   "zh-hans": hans,
   "zh-hant": hant,
 };
+
 export function validateCopy(value: Record<Locale, LocaleCopy>): void {
-  const nonempty = (v: unknown, path: string): void => {
-    if (typeof v === "string") {
-      if (!v.trim()) throw new Error(`Missing content: ${path}`);
-    } else if (Array.isArray(v)) {
-      v.forEach((item, i) => nonempty(item, `${path}.${i}`));
-    } else if (v && typeof v === "object") {
-      for (const [k, item] of Object.entries(v)) nonempty(item, `${path}.${k}`);
-    } else throw new Error(`Missing content: ${path}`);
+  const missing = (path: string): never => {
+    throw new Error(`Missing content: ${path}`);
+  };
+  const text = (v: unknown, path: string): void => {
+    if (typeof v !== "string" || !v.trim()) missing(path);
+  };
+  const required = (
+    v: unknown,
+    keys: readonly string[],
+    path: string,
+  ): void => {
+    if (!v || typeof v !== "object") missing(path);
+    for (const key of keys)
+      text((v as Record<string, unknown>)[key], `${path}.${key}`);
+  };
+  const texts = (v: unknown, path: string): void => {
+    if (!Array.isArray(v) || v.length === 0) missing(path);
+    (v as unknown[]).forEach((item, i) => text(item, `${path}.${i}`));
   };
   for (const locale of localeIds) {
     const t = value[locale];
-    if (!t) throw new Error(`Missing locale ${locale}`);
+    if (!t) missing(locale);
+    text(t.lang, `${locale}.lang`);
+    required(
+      t.nav,
+      ["platform", "solutions", "developers", "research", "company"],
+      `${locale}.nav`,
+    );
+    required(
+      t.ui,
+      [
+        "menu",
+        "contact",
+        "skip",
+        "top",
+        "primary",
+        "secondary",
+        "notice",
+        "legal",
+        "figureNote",
+        "read",
+        "flowTitle",
+        "external",
+        "human",
+        "vision",
+        "research",
+        "back",
+        "source",
+        "date",
+        "author",
+      ],
+      `${locale}.ui`,
+    );
+    required(t.ui.status, ["planned", "exploring"], `${locale}.ui.status`);
+    texts(t.ui.flow, `${locale}.ui.flow`);
     for (const id of pageIds) {
-      if (!t.pages[id]) throw new Error(`Missing page ${locale}.${id}`);
-      for (const key of ["title", "description", "heading", "intro"] as const)
-        nonempty(t.pages[id][key], `${locale}.${id}.${key}`);
+      const p = t.pages?.[id];
+      const path = `${locale}.${id}`;
+      required(p, ["title", "description", "heading", "intro"], path);
+      if (!Array.isArray(p.sections)) missing(`${path}.sections`);
+      // Article body lives in Markdown; an empty sections array here is intentional.
+      if (id !== "article" && p.sections.length === 0)
+        missing(`${path}.sections`);
+      p.sections.forEach((s, i) => {
+        const sectionPath = `${path}.sections.${i}`;
+        required(s, ["id", "title"], sectionPath);
+        texts(s.paragraphs, `${sectionPath}.paragraphs`);
+        if (s.bullets !== undefined) texts(s.bullets, `${sectionPath}.bullets`);
+      });
     }
-    for (const id of Object.keys(capabilityStates)) {
-      if (!t.capabilities[id as keyof typeof capabilityStates])
-        throw new Error(`Missing capability ${locale}.${id}`);
+    for (const id of Object.keys(capabilityStates) as Array<
+      keyof typeof capabilityStates
+    >) {
+      const c = t.capabilities?.[id];
+      const path = `${locale}.capabilities.${id}`;
+      required(c, ["title", "summary", "input", "output"], path);
+      texts(c.boundaries, `${path}.boundaries`);
     }
-    for (const key of ["notice", "legal", "contact", "skip", "menu"] as const)
-      nonempty(t.ui[key], `${locale}.ui.${key}`);
-    nonempty(t, locale);
   }
 }
 validateCopy(copy);
