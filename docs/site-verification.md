@@ -15,3 +15,4 @@ Task 2: baseline and new builds pass. Three homepages at 375 and 1440: one h1/ma
 
 Complete regression, article evidence and independent review results will follow.
 Task 3: 21 content routes + 404 pass built-output metadata/link/anchor checks; missing /platform/ was observed before implementation. Localized solutions → company contact → footer trust → Traditional same-topic switch passes in browser.
+Task 4: complete 24 content routes + 404 pass. All three articles contain nine substantive sections and a scoped official protocol citation; Chinese body is approximately 1,850 CJK characters. Official x402 HTTP transport v2 read on 2026-11-01; main remains mutable. Claims distinguish protocol facts, hypotheses, editorial opinion and current site state. Browser contents links and same-topic switches pass in all three article languages. Astro diagnostics using existing /tmp/airdb-tech-audit check tool: 0 errors, 0 warnings, 0 hints (24 files).

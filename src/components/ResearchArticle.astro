@@ -1,0 +1,18 @@
+---
+import * as en from '../articles/ai-cross-border-payments.en.md';
+import * as hans from '../articles/ai-cross-border-payments.zh-hans.md';
+import * as hant from '../articles/ai-cross-border-payments.zh-hant.md';
+import {copy} from '../site/index';import {routeFor,type Locale} from '../site/model';import {sources,claims} from '../site/sources';
+import SiteLayout from '../layouts/SiteLayout.astro';
+interface Props {locale:Locale}
+const {locale}=Astro.props;const t=copy[locale];const article={en,'zh-hans':hans,'zh-hant':hant}[locale];
+const {Content,frontmatter:meta}=article;const headings=article.getHeadings().filter(h=>h.depth===2);
+if(meta.locale!==locale||meta.translationKey!=='ai-cross-border-payments'||meta.kind!=='research')throw new Error(`Invalid article identity: ${locale}`);
+if(!meta.title||!meta.author||!meta.description||Number.isNaN(Date.parse(meta.publishedAt))||Number.isNaN(Date.parse(meta.updatedAt)))throw new Error(`Missing article metadata: ${locale}`);
+if(!Array.isArray(meta.claimRefs)||meta.claimRefs.length!==claims.length||claims.some(c=>!meta.claimRefs.includes(c.id)))throw new Error(`Incomplete article claims: ${locale}`);
+const scope=locale==='en'?'Source scope: HTTP negotiation only. This does not establish AirDB integration, supported assets, regulatory approval or channel availability. The main branch is mutable; checked on 2026-11-01.':locale==='zh-hans'?'来源仅支持 HTTP 协商机制，不证明 AirDB 接入、支持资产、监管批准或通道可用。main 分支可能更新；核对日期：2026-11-01。':'來源僅支持 HTTP 協商機制，不證明 AirDB 接入、支援資產、監管批准或通道可用。main 分支可能更新；核對日期：2026-11-01。';
+---
+<SiteLayout locale={locale} pageId="article" title={meta.title+' — AirDB'} description={meta.description}>
+<article class="shell" data-translation-key={meta.translationKey}><header class="page-hero"><h1>{meta.title}</h1><p class="lead">{meta.description}</p><div class="article-meta"><span>{t.ui.research}</span><span>{meta.author}</span><span>{t.ui.date}: <time datetime={meta.publishedAt}>{meta.publishedAt}</time></span>{meta.updatedAt!==meta.publishedAt&&<time datetime={meta.updatedAt}>{meta.updatedAt}</time>}</div><p class="development-note">{t.ui.notice}</p></header>
+<div class="reading-layout"><nav class="article-nav" aria-label={locale==='en'?'Article contents':locale==='zh-hans'?'文章目录':'文章目錄'}><ol>{headings.map(h=><li><a href={'#'+h.slug}>{h.text.replace(/^\d+\.\s*/,'')}</a></li>)}</ol></nav><div class="article-body"><Content/><section id="sources" class="article-sources"><h2>{t.ui.source}</h2>{sources.map(s=><p><a href={s.url} target="_blank" rel="noopener noreferrer">x402 · HTTP transport v2 ↗</a></p>)}<p>{scope}</p></section><div class="article-bottom"><a href={routeFor(locale,'platform')}>{t.ui.back} →</a><a href={routeFor(locale,'company')+'#contact'}>{t.ui.contact} ↗</a></div></div></div></article>
+</SiteLayout>

@@ -1,7 +1,8 @@
 ---
 import {allPages,type Locale,type PageId} from '../site/model';
 import CompanyPage from '../components/CompanyPage.astro';
-export function getStaticPaths(){return allPages().filter(p=>p.pageId!=='home'&&p.pageId!=='article').map(p=>({params:{path:p.path.slice(1,-1)},props:{locale:p.locale,pageId:p.pageId}}));}
-const {locale,pageId}=Astro.props as {locale:Locale;pageId:Exclude<PageId,'home'|'article'>};
+import ResearchArticle from '../components/ResearchArticle.astro';
+export function getStaticPaths(){return allPages().filter(p=>p.pageId!=='home').map(p=>({params:{path:p.path.slice(1,-1)},props:{locale:p.locale,pageId:p.pageId}}));}
+const {locale,pageId}=Astro.props as {locale:Locale;pageId:Exclude<PageId,'home'>};
 ---
-<CompanyPage locale={locale} pageId={pageId}/>
+{pageId==='article'?<ResearchArticle locale={locale}/>:<CompanyPage locale={locale} pageId={pageId}/>}
