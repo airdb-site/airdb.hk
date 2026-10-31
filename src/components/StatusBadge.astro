@@ -1,0 +1,6 @@
+---
+import {copy} from '../site/index';import type {Locale,CapabilityStatus} from '../site/model';
+interface Props {locale:Locale;status:CapabilityStatus}
+const {locale,status}=Astro.props;
+---
+<span class="status" data-status={status}><span aria-hidden="true"></span>{copy[locale].ui.status[status]}</span>

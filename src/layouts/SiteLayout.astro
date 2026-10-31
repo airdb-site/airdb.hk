@@ -1,0 +1,26 @@
+---
+import {copy} from '../site/index';
+import {localeIds,routeFor,type Locale,type PageId} from '../site/model';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import '../styles/product.css';
+import '../styles/hk.css';
+interface Props {locale:Locale;pageId:PageId;title?:string;description?:string}
+const {locale,pageId,title=copy[locale].pages[pageId].title,description=copy[locale].pages[pageId].description}=Astro.props;
+const site='https://airdb.hk';
+---
+<!doctype html>
+<html lang={copy[locale].lang}>
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>{title}</title><meta name="description" content={description}/>
+<link rel="canonical" href={site+routeFor(locale,pageId)}/>
+{localeIds.map(l=><link rel="alternate" hreflang={copy[l].lang} href={site+routeFor(l,pageId)}/>)}
+<link rel="alternate" hreflang="x-default" href={site+routeFor('en',pageId)}/>
+<meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:type" content={pageId==='article'?'article':'website'}/><meta property="og:url" content={site+routeFor(locale,pageId)}/>
+<meta name="theme-color" content="#17281d"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="preload" href="/fonts/ibm-plex-sans-var-normal.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="/fonts/fraunces-var-normal.woff2" as="font" type="font/woff2" crossorigin/>
+</head>
+<body id="top"><a class="skip-link" href="#main">{copy[locale].ui.skip}</a><SiteHeader locale={locale} pageId={pageId}/><main id="main" tabindex="-1"><slot/></main><SiteFooter locale={locale} pageId={pageId}/></body>
+</html>

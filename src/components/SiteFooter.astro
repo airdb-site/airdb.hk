@@ -1,0 +1,6 @@
+---
+import {copy} from '../site/index';import {routeFor,type Locale,type PageId} from '../site/model';
+interface Props {locale:Locale;pageId:PageId}
+const {locale}=Astro.props;const t=copy[locale];
+---
+<footer class="site-footer"><div class="shell"><div class="footer-top"><a class="brand" href={routeFor(locale,'home')}>air<span>db</span><small>HONG<br/>KONG</small></a><nav aria-label={locale==='en'?'Footer':'页脚 / 頁腳'}><a href={routeFor(locale,'trust')}>{locale==='en'?'Trust & boundaries':locale==='zh-hans'?'信任与边界':'信任與邊界'}</a><a href={routeFor(locale,'company')}>{t.nav.company}</a><a href="https://airdb.group" target="_blank" rel="noopener noreferrer">AirDB Group ↗</a></nav></div><p class="legal">{t.ui.legal}</p><div class="footer-bottom"><span>© {new Date().getUTCFullYear()} AirDB</span><a href="mailto:info@airdb.com">info@airdb.com</a><a href="#top">{t.ui.top} ↑</a></div></div></footer>

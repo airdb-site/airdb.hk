@@ -1,0 +1,6 @@
+---
+import {copy} from '../site/index';import type {Locale} from '../site/model';
+interface Props {locale:Locale}
+const {locale}=Astro.props;const t=copy[locale];
+---
+<figure class="flow-diagram"><figcaption>{t.ui.flowTitle}</figcaption><div class="flow-rule" aria-hidden="true"><span>INTENT</span><span>CONTROL</span><span>TRACE</span></div><ol>{t.ui.flow.map((step,i)=><li class:list={{external:i===3}}><span class="step-number" aria-hidden="true">0{i+1}</span><span>{i===3?t.ui.external:step}</span><span class="step-dot" aria-hidden="true"></span></li>)}</ol><p class="review-note">{t.ui.human}</p><p class="figure-note">{t.ui.figureNote}</p></figure>

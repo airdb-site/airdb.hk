@@ -1,0 +1,20 @@
+---
+import {copy} from '../site/index';
+import {localeIds,routeFor,type Locale,type PageId} from '../site/model';
+interface Props {locale:Locale;pageId:PageId}
+const {locale,pageId}=Astro.props;const t=copy[locale];
+const navIds=['platform','solutions','developers','research','company'] as const;
+const langLabels={en:'EN','zh-hans':'简','zh-hant':'繁'};
+---
+<header class="site-header"><div class="shell header-inner">
+<a href={routeFor(locale,'home')} class="brand" aria-label="AirDB Hong Kong">air<span>db</span><small>HONG<br/>KONG</small></a>
+<nav class="desktop-nav" aria-label={locale==='en'?'Main navigation':'主导航'}>{navIds.map(id=><a href={routeFor(locale,id)} aria-current={pageId===id?'page':undefined}>{t.nav[id]}</a>)}</nav>
+<nav class="languages" aria-label={locale==='en'?'Language':'语言 / 語言'}>{localeIds.map(l=><a href={routeFor(l,pageId)} lang={copy[l].lang} aria-label={l==='en'?'English':l==='zh-hans'?'简体中文':'繁體中文'} aria-current={l===locale?'page':undefined}>{langLabels[l]}</a>)}</nav>
+<a class="header-contact" href={routeFor(locale,'company')+'#contact'}>{t.ui.contact} <span aria-hidden="true">↗</span></a>
+<details class="mobile-nav"><summary>{t.ui.menu}</summary><nav aria-label={t.ui.menu}>{navIds.map(id=><a href={routeFor(locale,id)} aria-current={pageId===id?'page':undefined}>{t.nav[id]}</a>)}<a href={routeFor(locale,'company')+'#contact'}>{t.ui.contact} ↗</a></nav></details>
+</div></header>
+<script>
+const menu=document.querySelector<HTMLDetailsElement>('.mobile-nav');
+menu?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.open=false;}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu?.open){menu.open=false;menu.querySelector('summary')?.focus();}});
+</script>

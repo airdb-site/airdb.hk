@@ -1,0 +1,6 @@
+---
+import {copy} from '../site/index';import {capabilityStates,routeFor,type Locale,type CapabilityId} from '../site/model';import StatusBadge from './StatusBadge.astro';
+interface Props {locale:Locale;id:CapabilityId}
+const {locale,id}=Astro.props;const c=copy[locale].capabilities[id];
+---
+<article class="capability"><StatusBadge locale={locale} status={capabilityStates[id]}/><h3><a href={routeFor(locale,'platform')+'#'+id}>{c.title}<span aria-hidden="true">↗</span></a></h3><p>{c.summary}</p><p class="flow-caption">{c.input} <span aria-hidden="true">→</span> {c.output}</p></article>
