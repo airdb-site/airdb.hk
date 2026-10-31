@@ -38,7 +38,7 @@ Migration map reviewed against three language datasets: original trade/e-CNY, Ag
 
 Browser artifacts and temporary scripts are local only in `/tmp/airdb-company-qa`, not uploaded or committed. Primary screenshots: final-en/zh-hans/zh-hant-{375,1440}.png, platform-1440.png, trust-1440.png, research-ai-cross-border-payments-1440.png, 404.png. Automated matrix results: results.json. Original source worktree remains untouched.
 
-Official x402 source was accessible and checked. Existing AirDB Group destination is preserved, but the web tool could not access it during this run; availability is not claimed. Mailto target was checked without sending email. Online GitHub Pages routing, clean dependency download, Safari/Firefox, assistive-technology screen readers and real target-customer feedback are not verified here. No deployment has occurred.
+Official x402 source was accessible and checked. Existing AirDB Group destination is preserved, but the web tool could not access it during this run; availability is not claimed. Mailto target was checked without sending email. Online GitHub Pages routing, Safari/Firefox, assistive-technology screen readers and real target-customer feedback are not verified here. Clean dependency download and the formal pnpm workflow were subsequently verified below. No deployment has occurred.
 
 ## Independent review and fix
 
@@ -46,4 +46,32 @@ Fresh whole-branch review at 18b408a: no Critical findings, one Important comple
 
 The gap allowed deletion of a required CTA, flow caption or capability title to pass validation. Six new tests reproduced missing CTA, flow caption, capability title, navigation label, status label and empty flow. The validator now explicitly requires UI, navigation, statuses, capability fields and structured section text while allowing the article's intentional empty sections array. All six tests failed before the fix; full suite now 12/12 passes. Build/output checks remain green; no content or layout changed in this fix.
 
-Unknown local path also verified independently by implementer: HTTP404, custom Page not found title and three language home links. Final branch is retained locally; original source remains on 874c57c and clean. Review limits remain production hosting/clean install, native zoom/non-Chromium/screen readers, and commercial or financial-service validation.
+Unknown local path also verified independently by implementer: HTTP404, custom Page not found title and three language home links. Final branch is retained locally; original source remains on 874c57c and clean. Review limits remain production hosting, native zoom/non-Chromium/screen readers, and commercial or financial-service validation. The initially outstanding clean-install check is resolved below.
+
+
+## Clean installation and official pnpm workflow — 2026-11-01
+
+Resolved the earlier clean-install and pnpm-wrapper limitations without changing product code, dependency versions, security policies or the running preview.
+
+- Exported commit `c602325` with `git archive` into `/tmp/airdb-clean-verify.aTk1Wq`; no node_modules or existing store was copied.
+- Used existing pnpm 11.9.0 through a temporary PATH launcher, because the system PATH lacks pnpm. An initial symlink launcher was non-executable and failed before installation; a local shell launcher invoking the same pnpm with Node corrected that tooling issue. Global PATH and configuration were not modified.
+- A single actual clean download attempt was run with approved network execution, the official registry, an empty isolated store and no fetch retries:
+
+```sh
+pnpm install --frozen-lockfile --registry=https://registry.npmjs.org/ --store-dir=/tmp/airdb-clean-verify.aTk1Wq/clean-store --fetch-retries=0 --fetch-timeout=20000
+```
+
+Result: 194 downloaded, 0 reused, 194 added; Astro 7.3.5 and @astrojs/sitemap 3.7.4. Existing supply-chain policy remained active. esbuild postinstall completed under the existing allowBuilds policy. Earlier sandbox DNS failure does not reproduce with approved network execution; it cannot conclusively be attributed to a transient registry outage.
+
+Using the same isolated store through `npm_config_store_dir` and the temporary pnpm PATH, the unchanged repository commands passed:
+
+```sh
+make install
+make build
+pnpm exec node --test tests/*.test.ts
+pnpm exec python3 scripts/check-site.py --stage complete
+```
+
+Results: frozen install up to date; official `pnpm build` invokes Astro successfully and emits 24 content routes plus 404; 12/12 tests; full output checker passes. No project build-script defect was found. No repeated visual QA was needed because product code did not change.
+
+Lockfile SHA-256 before and after: `ed99f8fececd2734e0fc9c0d8e818ee7cadea1f7e6face90ea7fd66fd1f22212`. Temporary install log remains at `/tmp/airdb-clean-verify.aTk1Wq/install.log`. The existing 4322 preview and its dependency directory were not modified. No push, merge or deployment.
