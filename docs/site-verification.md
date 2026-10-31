@@ -15,7 +15,7 @@ Task 2: baseline and new builds pass. Three homepages at 375 and 1440: one h1/ma
 
 Complete regression, article evidence and independent review results will follow.
 Task 3: 21 content routes + 404 pass built-output metadata/link/anchor checks; missing /platform/ was observed before implementation. Localized solutions → company contact → footer trust → Traditional same-topic switch passes in browser.
-Task 4: complete 24 content routes + 404 pass. All three articles contain nine substantive sections and a scoped official protocol citation; Chinese body is approximately 1,850 CJK characters. Official x402 HTTP transport v2 read on 2026-11-01; main remains mutable. Claims distinguish protocol facts, hypotheses, editorial opinion and current site state. Browser contents links and same-topic switches pass in all three article languages. Astro diagnostics using existing /tmp/airdb-tech-audit check tool: 0 errors, 0 warnings, 0 hints (24 files).
+Task 4: complete 24 content routes + 404 pass. All three articles contain nine substantive sections and a scoped official protocol citation; Chinese body is approximately 1,850 CJK characters. Official x402 HTTP transport v2 read on 2026-10-31; main remains mutable. Claims distinguish protocol facts, hypotheses, editorial opinion and current site state. Browser contents links and same-topic switches pass in all three article languages. Astro diagnostics using existing /tmp/airdb-tech-audit check tool: 0 errors, 0 warnings, 0 hints (24 files).
 
 ## Final regression
 
@@ -49,7 +49,7 @@ The gap allowed deletion of a required CTA, flow caption or capability title to 
 Unknown local path also verified independently by implementer: HTTP404, custom Page not found title and three language home links. Final branch is retained locally; original source remains on 874c57c and clean. Review limits remain production hosting, native zoom/non-Chromium/screen readers, and commercial or financial-service validation. The initially outstanding clean-install check is resolved below.
 
 
-## Clean installation and official pnpm workflow — 2026-11-01
+## Clean installation and official pnpm workflow — 2026-10-31
 
 Resolved the earlier clean-install and pnpm-wrapper limitations without changing product code, dependency versions, security policies or the running preview.
 

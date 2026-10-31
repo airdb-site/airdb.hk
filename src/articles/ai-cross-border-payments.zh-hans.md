@@ -4,8 +4,8 @@ locale: zh-hans
 title: AI重构跨境支付：效率、风控与Agent商业时代
 description: 当软件开始发起经济行为，效率、授权与责任需要一起演进。AirDB 对跨境贸易与 Agent 交易基础设施的研究观点。
 author: AirDB 编辑
-publishedAt: '2026-11-01'
-updatedAt: '2026-11-01'
+publishedAt: '2026-10-31'
+updatedAt: '2026-10-31'
 kind: research
 claimRefs: [http-negotiation, agent-direction, workflow-efficiency, airdb-stage]
 ---

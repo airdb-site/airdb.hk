@@ -15,7 +15,7 @@ export const sources: Source[] = [
   {
     id: "x402-http-v2",
     url: "https://github.com/x402-foundation/x402/blob/main/specs/transports-v2/http.md",
-    checkedAt: "2026-11-01",
+    checkedAt: "2026-10-31",
     version: "HTTP transport v2; main (mutable), checked on stated date",
     scope:
       "HTTP 402 and the three payment headers; not evidence of AirDB integration, asset support, licensing or channel availability.",

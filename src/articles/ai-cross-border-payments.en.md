@@ -4,8 +4,8 @@ locale: en
 title: 'AI reshapes cross-border payments: efficiency, risk and the Agent economy'
 description: When software initiates economic activity, efficiency, authorization and responsibility must evolve together. An AirDB research perspective on trade and Agent infrastructure.
 author: AirDB editorial
-publishedAt: '2026-11-01'
-updatedAt: '2026-11-01'
+publishedAt: '2026-10-31'
+updatedAt: '2026-10-31'
 kind: research
 claimRefs: [http-negotiation, agent-direction, workflow-efficiency, airdb-stage]
 ---
