@@ -14,3 +14,4 @@ Task 1: 5/5 Node route/content tests pass; missing page and empty notice reject 
 Task 2: baseline and new builds pass. Three homepages at 375 and 1440: one h1/main, no horizontal overflow, menu Escape closes and returns focus, no JS content/links accessible, no page errors. Screenshots inspected for cream/green palette, serif English/system Chinese, first-screen hierarchy, spacing and mobile stacking. New screenshots remain local in /tmp/airdb-company-qa.
 
 Complete regression, article evidence and independent review results will follow.
+Task 3: 21 content routes + 404 pass built-output metadata/link/anchor checks; missing /platform/ was observed before implementation. Localized solutions → company contact → footer trust → Traditional same-topic switch passes in browser.
