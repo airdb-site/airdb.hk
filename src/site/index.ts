@@ -78,7 +78,17 @@ export function validateCopy(value: Record<Locale, LocaleCopy>): void {
         required(s, ["id", "title"], sectionPath);
         texts(s.paragraphs, `${sectionPath}.paragraphs`);
         if (s.bullets !== undefined) texts(s.bullets, `${sectionPath}.bullets`);
+        if (s.caseStudy) {
+          required(s.caseStudy, ["label", "stepsLabel", "resultLabel", "exceptionLabel", "exception", "cta"], `${sectionPath}.caseStudy`);
+          texts(s.bullets, `${sectionPath}.bullets`);
+        }
       });
+      if (id === "solutions") {
+        for (const caseId of ["trade", "agent"]) {
+          if (!p.sections.find(s => s.id === caseId)?.caseStudy)
+            missing(`${path}.${caseId}.caseStudy`);
+        }
+      }
     }
     for (const id of Object.keys(capabilityStates) as Array<
       keyof typeof capabilityStates
