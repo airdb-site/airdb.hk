@@ -32,6 +32,15 @@ test("empty development notice prevents publication", () => {
   assert.throws(() => validateCopy(v), /notice/);
 });
 
+test("an untranslated or incomplete case study prevents publication", () => {
+  const missing = structuredClone(copy);
+  delete missing["zh-hant"].pages.solutions.sections[0].caseStudy;
+  assert.throws(() => validateCopy(missing), /trade.caseStudy/);
+  const incomplete = structuredClone(copy);
+  incomplete["zh-hans"].pages.solutions.sections[1].caseStudy!.exception = "";
+  assert.throws(() => validateCopy(incomplete), /caseStudy.exception/);
+});
+
 for (const [label, remove] of [
   [
     "primary CTA",

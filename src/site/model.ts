@@ -47,6 +47,14 @@ export interface Section {
   title: string;
   paragraphs: string[];
   bullets?: string[];
+  caseStudy?: {
+    label: string;
+    stepsLabel: string;
+    resultLabel: string;
+    exceptionLabel: string;
+    exception: string;
+    cta: string;
+  };
 }
 export interface PageCopy {
   title: string;
